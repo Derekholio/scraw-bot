@@ -55,7 +55,8 @@ function processCommand(command, args, message) {
 	if (command == "scraw") {
 		scraw.replyWithScraw(message);
 	} else if (command == "play") {
-		scraw.playSongFromLinkInChannel(message, args);
+		var link = args[0];
+		scraw.playSongFromLinkInChannel(message, link);
 	} else if (command == "stop") {
 		scraw.leaveVoiceChannel(message);
 	} else if (command == "playlist") {
@@ -65,8 +66,10 @@ function processCommand(command, args, message) {
 				scraw.playlistAdd(message, link);
 				break;
 			case "list":
+				scraw.playlistList(message);
 				break;
 			case "play":
+				scraw.playlistPlay(message);
 				break;
 		}
 	}
