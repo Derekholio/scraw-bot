@@ -72,7 +72,7 @@ class Scraw {
 
     playlistAdd(message, link){
         var db = new sqlite3.Database("playlist.db");
-        var info = getInfo(link, function(err, info){
+        var info = ytdl.getInfo(link, function(err, info){
             var title = info.title;
         });
         db.serialize(function() {
