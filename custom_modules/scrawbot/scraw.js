@@ -29,7 +29,7 @@ class Scraw {
                     var fileToPlay = items[number];
                     const dispatcher = connection.playFile(path + "/" + fileToPlay);
                     dispatcher.on("end", end => {
-                        voiceChannel.leave();
+                        leaveVoiceChannel();
                         this._setReady(true);
                     });
                 });
