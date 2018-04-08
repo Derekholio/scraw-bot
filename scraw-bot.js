@@ -1,5 +1,3 @@
-var fs = require('fs');
-var ytdl = require('ytdl-core');
 var Discord = require('discord.js');
 var bot = new Discord.Client();
 var scraw = require("scraw");

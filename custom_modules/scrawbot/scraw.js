@@ -1,3 +1,6 @@
+var fs = require('fs');
+var ytdl = require('ytdl-core');
+
 class Scraw {
     configure(Discord) {
         this._discord = Discord;
