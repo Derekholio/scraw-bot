@@ -30,7 +30,6 @@ class Scraw {
                     const dispatcher = connection.playFile(path + "/" + fileToPlay);
                     dispatcher.on("end", end => {
                         voiceChannel.leave();
-                        
                     });
                 });
             })
@@ -42,10 +41,10 @@ class Scraw {
         }
     }
 
-    playSongFromLinkInChannel(message) {
+    playSongFromLinkInChannel(message, args) {
         if (this._ready) {
             this._setReady(false);
-            var link = message.content.split(' ')[1];
+            var link = args[0];
             if (link != null) {
                 var voiceChannel = message.member.voiceChannel;
                 voiceChannel.join().then(connection => {
@@ -53,7 +52,6 @@ class Scraw {
                     dispatcher.on("end", end => {
                         voiceChannel.leave();
                     });
-                    this._setReady(true);
                 })
                     .catch(err => {
                         console.log(err);

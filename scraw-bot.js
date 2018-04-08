@@ -55,7 +55,7 @@ function processCommand(command, args, message) {
 	if (command == "scraw") {
 		scraw.replyWithScraw(message);
 	} else if (command == "play") {
-		scraw.playSongFromLinkInChannel(message);
+		scraw.playSongFromLinkInChannel(message, args);
 	} else if (command = "stop") {
 		scraw.leaveVoiceChannel();
 	}
