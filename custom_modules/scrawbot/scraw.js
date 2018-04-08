@@ -20,8 +20,8 @@ class Scraw {
         if (this._ready) {
             this._setReady(false);
             this.replyToMessage(message, "SCRAW!");
-            this.voiceChannel = message.member.voiceChannel;
-            this.voiceChannel.join().then(connection => {
+            var voiceChannel = message.member.voiceChannel;
+            voiceChannel.join().then(connection => {
                 var path = "./scraws";
                 fs.readdir(path, function (err, items) {
                     var count = items.length;
@@ -29,15 +29,16 @@ class Scraw {
                     var fileToPlay = items[number];
                     const dispatcher = connection.playFile(path + "/" + fileToPlay);
                     dispatcher.on("end", end => {
-                        this.leaveVoiceChannel();
-                        this._setReady(true);
+                        voiceChannel.leave();
+                        
                     });
+                    this._setReady(true);
                 });
 
             })
                 .catch(err => {
                     console.log(err);
-                    this.leaveVoiceChannel();
+                    voiceChannel.leave();
                 })
                 .then(() => { this._setReady(true); });
         }
@@ -48,29 +49,22 @@ class Scraw {
             this._setReady(false);
             var link = message.content.split(' ')[1];
             if (link != null) {
-                this.voiceChannel = message.member.voiceChannel;
-                this.voiceChannel.join().then(connection => {
+                var voiceChannel = message.member.voiceChannel;
+                voiceChannel.join().then(connection => {
                     const dispatcher = connection.playStream(ytdl(link, { filter: "audioonly" }));
                     dispatcher.on("end", end => {
-                        this.leaveVoiceChannel();
-                        _setReady(true);
+                        voiceChannel.leave();
                     });
+                    this._setReady(true);
                 })
                     .catch(err => {
                         console.log(err);
-                        this.leaveVoiceChannel();
+                        voiceChannel.leave();
                     })
                     .then(() => { this._setReady(true); });
             } else {
                 this.replyToMessageWithAt(message, "You must provide a YouTube link!");
             }
-        }
-    }
-
-    leaveVoiceChannel() {
-        if (this.voiceChannel != null) {
-            this.voiceChannel.leave();
-            this.voiceChannel = null;
         }
     }
 
