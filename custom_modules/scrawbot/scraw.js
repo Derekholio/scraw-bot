@@ -32,9 +32,7 @@ class Scraw {
                         voiceChannel.leave();
                         
                     });
-                    this._setReady(true);
                 });
-
             })
                 .catch(err => {
                     console.log(err);
