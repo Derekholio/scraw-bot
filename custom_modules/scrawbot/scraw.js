@@ -64,6 +64,11 @@ class Scraw {
         }
     }
 
+    leaveVoiceChannel(message){
+        var voiceChannel = message.member.voiceChannel;
+        voiceChannel.leave();
+    }
+
     _setReady(isReady) {
         this._ready = isReady;
     }
