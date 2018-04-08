@@ -1,5 +1,6 @@
 var fs = require('fs');
 var ytdl = require('ytdl-core');
+var sqlite3 = require("sqlite3").verbose();
 
 class Scraw {
     configure(Discord) {
@@ -67,6 +68,19 @@ class Scraw {
     leaveVoiceChannel(message){
         var voiceChannel = message.member.voiceChannel;
         voiceChannel.leave();
+    }
+
+    playlistAdd(message, link){
+        var db = new sqlite3.Database("playlist.db");
+        var info = getInfo(link, function(err, info){
+            var title = info.title;
+        });
+        db.serialize(function() {
+            db.run("INSERT INTO Playlist(Name, Link) VALUES('${title}', '${link}');")
+        });
+        db.close();
+
+        this.replyToMessageWithAt(message, "Added ${title} to playlist!");
     }
 
     _setReady(isReady) {

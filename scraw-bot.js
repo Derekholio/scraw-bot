@@ -13,9 +13,9 @@ console.log("Started!");
 
 bot.on('message', function (message) {
 	var isBotUser = message.author.bot;
-	var commands = [ "scraw", "play", "stop" ];
+	var commands = ["scraw", "play", "stop", "playlist"];
 
-	if(!isBotUser){
+	if (!isBotUser) {
 		var command = getCommand(message.content);
 		if (command != null) {
 			console.log("Command: " + command);
@@ -56,8 +56,19 @@ function processCommand(command, args, message) {
 		scraw.replyWithScraw(message);
 	} else if (command == "play") {
 		scraw.playSongFromLinkInChannel(message, args);
-	} else if (command = "stop") {
+	} else if (command == "stop") {
 		scraw.leaveVoiceChannel(message);
+	} else if (command == "playlist") {
+		switch(args[0]){
+			case "add":
+				var link = args[1];
+				scraw.playlistAdd(message, link);
+				break;
+			case "list":
+				break;
+			case "play":
+				break;
+		}
 	}
 }
 //end functions
