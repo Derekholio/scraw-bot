@@ -73,8 +73,9 @@ class Scraw {
 
     playlistAdd(message, link){
         var db = new sqlite3.Database("playlist.db");
-        var info = ytdl.getInfo(link, function(err, info){
-            var title = info.title;
+        var title;
+        ytdl.getInfo(link, function(err, info){
+            title = info.title;
         });
         db.serialize(function() {
             db.run(util.format("INSERT INTO Playlist(Name, Link) VALUES('%s', '%s');", title, link));
