@@ -1,6 +1,7 @@
 var fs = require('fs');
 var ytdl = require('ytdl-core');
 var sqlite3 = require("sqlite3").verbose();
+var util = require("util");
 
 class Scraw {
     configure(Discord) {
@@ -76,11 +77,11 @@ class Scraw {
             var title = info.title;
         });
         db.serialize(function() {
-            db.run("INSERT INTO Playlist(Name, Link) VALUES('${title}', '${link}');")
+            db.run(util.format("INSERT INTO Playlist(Name, Link) VALUES('%s', '%s');", title, link));
         });
         db.close();
 
-        this.replyToMessageWithAt(message, "Added ${title} to playlist!");
+        this.replyToMessageWithAt(message, util.format("Added %s to playlist!", title));
     }
 
     _setReady(isReady) {
