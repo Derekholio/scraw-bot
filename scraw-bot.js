@@ -7,7 +7,7 @@ var config = require(configFile);
 var botToken = config.botToken;
 
 bot.login(botToken);
-scraw.configure(Discord);
+scraw.configure(Discord, bot);
 
 console.log("Started!");
 
@@ -70,6 +70,9 @@ function processCommand(command, args, message) {
 				break;
 			case "play":
 				scraw.playlistPlay(message);
+				break;
+			case "stop":
+				scraw.playlistStop(message);
 				break;
 		}
 	}
