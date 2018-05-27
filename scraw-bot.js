@@ -23,7 +23,7 @@ bot.on('voiceStateUpdate', function (oldMember, newMember) {
 				console.log(botCommandsChannel);
 				oldChannel.join().then(connection => {
 					botCommandsChannel.send("-disconnect");
-					botCommandsChannel.leave();
+					oldChannel.leave();
 				})
 				.catch(err => {
 					console.log(err);
