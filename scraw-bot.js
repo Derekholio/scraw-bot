@@ -11,6 +11,25 @@ scraw.configure(Discord, bot);
 
 console.log("Started!");
 
+bot.on('voiceStateUpdate', function (oldMember, newMember) {
+	if (newMember.voiceChannelID == null) { //disconnect
+		var oldMemberChannelId = oldMember.voiceChannelID;
+		var oldChannel = oldMember.guild.channels.find("id", oldMemberChannelId);
+		console.log(oldChannel.members.array().length);
+		if (oldChannel.members.array().length == 1) {
+			var user = oldChannel.members.array()[0];
+			if (user.user.username === "Marv") {
+				var botCommandsChannel = oldMember.guild.channels.find("name", "bot-commands");
+				console.log(botCommandsChannel);
+				oldChannel.join().then(connection => {
+					botCommandsChannel.send("-disconnect");
+					botCommandsChannel.leave();
+				});
+			}
+		}
+	}
+});
+
 bot.on('message', function (message) {
 	var isBotUser = message.author.bot;
 	var commands = ["scraw", "play", "stop", "playlist"];
@@ -60,7 +79,7 @@ function processCommand(command, args, message) {
 	} else if (command == "stop") {
 		scraw.leaveVoiceChannel(message);
 	} else if (command == "playlist") {
-		switch(args[0]){
+		switch (args[0]) {
 			case "add":
 				var link = args[1];
 				scraw.playlistAdd(message, link);
